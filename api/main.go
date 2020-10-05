@@ -41,9 +41,21 @@ func getBubbleSort(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(res)
 }
 
+func getInsertionSort(w http.ResponseWriter, r *http.Request) {
+	var req Request
+	json.NewDecoder(r.Body).Decode(&req)
+	tmp := sort.InsertionSort(req.Numbers)
+	res := Response{
+		SortedArray: tmp,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(res)
+}
+
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/bubbleSort", getBubbleSort)
 	router.HandleFunc("/selectionSort", getSelectionSort)
+	router.HandleFunc("/insertionSort", getInsertionSort)
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
