@@ -54,3 +54,26 @@ func SelectionSort(unSorted []int) [][]int {
 	}
 	return sorted
 }
+
+func InsertionSort(unSorted []int) [][]int {
+	var b []int
+	var sorted [][]int
+	var n = len(unSorted)
+	for i := 1; i < n; i++ {
+		j := i
+		for j > 0 {
+			if unSorted[j-1] > unSorted[j] {
+				unSorted[j-1], unSorted[j] = unSorted[j], unSorted[j-1]
+			}
+			j = j - 1
+		}
+		//Appending the value of 'a' to 'sorted'
+		b = make([]int, len(unSorted))
+		copy(b, unSorted)
+		sorted = append(sorted, b)
+		if sort.IntsAreSorted(unSorted) {
+			return sorted
+		}
+	}
+	return sorted
+}
